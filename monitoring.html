@@ -1,0 +1,92 @@
+<!--
+Copyright 2019 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<script type="text/html" data-template-name="google-cloud-monitoring">
+    <!--Name-->
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+
+    <!--Credentials-->
+    <div class="form-row">
+        <label for="node-input-account"><i class="fa fa-user"></i> Credentials</label>
+        <input type="text" id="node-input-account">        
+    </div>
+
+    <!--Key File-->
+    <div class="form-row">
+        <label for="node-input-keyFilename"><i class="fa fa-user"></i> Key File</label>
+        <input type="text" id="node-input-keyFilename">
+    </div>
+
+    <!--Metric Type-->
+    <div class="form-row">
+        <label for="node-input-metricType"><i class="fa fa-tag"></i> Metric Type</label>
+        <input type="text" id="node-input-metricType">
+    </div>
+
+    <!--Project ID-->
+    <div class="form-row">
+        <label for="node-input-projectId"><i class="fa fa-tag"></i> Project ID</label>
+        <input type="text" id="node-input-projectId">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="google-cloud-monitoring">
+    <p>Record a monitoring measurement.</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>msg.payload
+            <span class="property-type">number</span>
+        </dt>
+        <dd>The value to be logged as a measurement.</dd>
+    </dl>
+    <h3>Details</h3>
+    <p>
+        The monitoring node provides the ability to record a monitoring record.  At run time, the value of
+        <code>msg.payload</code> should be a monitoring value (usually a numeric).
+    </p>
+    <p>
+        At configuration time, we must provide some values:
+        <ul>
+            <li><code>projectId</code> - The identity of the project that holds the metric definition associated with the value we are recording.</li>
+            <li><code>metricType</code> - The type of the metric we are recording.</li>
+        </ul>
+    </p>
+</script>
+
+<script type="text/javascript">
+RED.nodes.registerType("google-cloud-monitoring", {
+    category: "GCP",
+    defaults: {
+        account: { type: "google-cloud-credentials", required: false },
+        keyFilename: {value: "", required: false },
+        metricType: { value: "", required: true },
+        projectId:  { value: "", required: true },
+        name:       { value: "", required: false }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "monitoring.png",
+    align: "left",
+    color: "#3FADB5",
+    label: function () {
+        return this.name || "monitoring";
+    },
+    paletteLabel: "monitoring"
+});
+</script>
